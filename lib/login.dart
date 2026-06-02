@@ -13,44 +13,51 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SizedBox(
-        child: Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextField(
-                onChanged: (value) {
-                  email = value;
-                },
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
+    return Material(
+      child: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Padding(padding: EdgeInsets.all(22.0),
+        child: Column(
+          children: [
+            TextField(
+              onChanged: (text) {
+                email = text;
+              },
+              keyboardType: TextInputType.emailAddress,
+              decoration: 
+                InputDecoration(border:OutlineInputBorder(),
+                labelText: 'Email'
                 ),
-              ),
-              SizedBox(height: 16.0),
-              TextField(
-                onChanged: (value) {
-                  senha = value;
-                },
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Senha',
-                  border: OutlineInputBorder(),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextField(
+              onChanged: (text) {
+                senha = text;
+              },
+              obscureText: true,
+              decoration: 
+                InputDecoration(border:OutlineInputBorder(),
+                labelText: 'Senha'
                 ),
-              ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () {
-                  // Lógica de autenticação aqui
-                },
-                child: Text('Entrar'),
-              ),
-            ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+              child: Text('Entrar'),
+              onPressed: () {
+                  if (email == 'admin' && senha == 'admin') {
+                      print('Login bem-sucedido!'); 
+                  } else {
+                      print('Email ou senha incorretos.');
+                  }
+              },
           ),
-        ),
-      ),
-    );
-  }
+      ])
+    
+      )
+    ));  }
 }
