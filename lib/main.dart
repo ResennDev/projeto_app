@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_app/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,9 +29,10 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.blue),
+        colorScheme: .fromSeed(seedColor: const Color.fromARGB(255, 39, 227, 6)),
+        useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Gerenciador de Tarefas'),
+      home: LoginPage(),
     );
   }
 }
