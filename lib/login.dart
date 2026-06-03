@@ -17,15 +17,16 @@ class _LoginPageState extends State<LoginPage> {
       child: SizedBox(
         width: double.infinity,
         height: double.infinity,
-        child: Padding(padding: EdgeInsets.all(22.0),
+        child: Padding(padding: EdgeInsets.all(20.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
               onChanged: (text) {
                 email = text;
               },
               keyboardType: TextInputType.emailAddress,
-              decoration: 
+              decoration:
                 InputDecoration(border:OutlineInputBorder(),
                 labelText: 'Email'
                 ),
@@ -38,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
                 senha = text;
               },
               obscureText: true,
-              decoration: 
+              decoration:
                 InputDecoration(border:OutlineInputBorder(),
                 labelText: 'Senha'
                 ),
@@ -50,14 +51,15 @@ class _LoginPageState extends State<LoginPage> {
               child: Text('Entrar'),
               onPressed: () {
                   if (email == 'admin' && senha == 'admin') {
-                      print('Login bem-sucedido!'); 
+                      print('Login bem-sucedido!');
                   } else {
                       print('Email ou senha incorretos.');
                   }
               },
           ),
       ])
-    
-      )
-    ));  }
+
+        )
+    ));
+  }
 }
