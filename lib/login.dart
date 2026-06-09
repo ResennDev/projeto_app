@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_app/theme.dart';
+import 'package:projeto_app/home_page.dart';
 
 String email = '';
 String senha = '';
@@ -15,153 +15,166 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          width: 300,
-          height: 450,
+      body: Container(
+        decoration: BoxDecoration(
+          color: Colors.green,
+          borderRadius: BorderRadius.circular(10),
+        ),
 
-          decoration: BoxDecoration(
-            color: Colors.green,
-            borderRadius: BorderRadius.circular(10),
-          ),
+        child: Padding(
+          padding: EdgeInsets.all(20),
 
-          child: Padding(
-            padding: EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 10),
 
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: 10),
-
-                Container(
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(200, 28, 77, 29),
-                    shape: BoxShape.circle,
-                  ),
-
-                  child: Icon(Icons.login, size: 55, color: Colors.green),
+              Container(
+                width: 70,
+                height: 70,
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(200, 28, 77, 29),
+                  shape: BoxShape.circle,
                 ),
 
-                SizedBox(height: 10),
+                child: Icon(Icons.login, size: 55, color: Colors.green),
+              ),
 
-                Text(
-                  'Faça seu login',
+              SizedBox(height: 10),
+
+              Text(
+                'Faça seu login',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+
+              SizedBox(height: 20),
+
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Email',
                   style: TextStyle(
-                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
+              ),
 
-                SizedBox(height: 20),
+              TextField(
+                style: TextStyle(color: Colors.white70),
+                decoration: InputDecoration(
+                  hintText: 'Digite seu email',
+                  hintStyle: TextStyle(color: Colors.white70),
 
-                Align(
-                  alignment: Alignment.centerLeft,
+                  filled: true,
+                  fillColor: const Color.fromARGB(255, 28, 77, 29),
+
+                  prefixIcon: Icon(Icons.email, color: Colors.white70),
+
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 5),
+
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Senha',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+
+              TextField(
+                obscureText: true,
+                style: TextStyle(color: Colors.white70),
+                decoration: InputDecoration(
+                  hintText: 'Digite sua senha',
+                  hintStyle: TextStyle(color: Colors.white70),
+
+                  filled: true,
+                  fillColor: const Color.fromARGB(255, 28, 77, 29),
+
+                  prefixIcon: Icon(Icons.lock, color: Colors.white70),
+
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 20),
+
+              SizedBox(
+                width: double.infinity,
+
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (email == "admin" && senha == "123") {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomePage(),
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Email ou senha incorretos"),
+                        ),
+                      );
+                    }
+
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.green,
+                    elevation: 8,
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                  ),
                   child: Text(
-                    'Email',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                    'Entrar',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
+              ),
 
-                TextField(
-                  style: TextStyle(color: Colors.white70),
-                  decoration: InputDecoration(
-                    hintText: 'Digite seu email',
-                    hintStyle: TextStyle(color: Colors.white70),
+              SizedBox(height: 5),
 
-                    filled: true,
-                    fillColor: const Color.fromARGB(255, 28, 77, 29),
+              Text('Não é cadastrado?', style: TextStyle(color: Colors.white)),
 
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide.none,
-                    ),
+              SizedBox(height: 3),
+
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'Cadastre-se',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    decoration: TextDecoration.underline,
                   ),
                 ),
-
-                SizedBox(height: 5),
-
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Senha',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-
-                TextField(
-                  obscureText: true,
-                  style: TextStyle(color: Colors.white70),
-                  decoration: InputDecoration(
-                    hintText: 'Digite sua senha',
-                    hintStyle: TextStyle(color: Colors.white70),
-
-                    filled: true,
-                    fillColor: const Color.fromARGB(255, 28, 77, 29),
-
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
-
-                SizedBox(height: 20),
-
-                SizedBox(
-                  width: double.infinity,
-
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: Colors.green,
-                      elevation: 8,
-                      padding: EdgeInsets.symmetric(vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                    ),
-                    child: Text(
-                      'Entrar',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-
-                SizedBox(height: 5),
-
-                Text(
-                  'Não é cadastrado?',
-                  style: TextStyle(color: Colors.white),
-                ),
-
-                SizedBox(height: 3),
-
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Cadastre-se',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
