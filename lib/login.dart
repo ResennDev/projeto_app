@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_app/home_page.dart';
+import 'package:projeto_app/cadastro_page.dart';
 
 String email = '';
 String senha = '';
@@ -65,7 +66,12 @@ class _LoginPageState extends State<LoginPage> {
               ),
 
               TextField(
+                onChanged: (texto) {
+                  email = texto;
+                },
+
                 style: TextStyle(color: Colors.white70),
+                
                 decoration: InputDecoration(
                   hintText: 'Digite seu email',
                   hintStyle: TextStyle(color: Colors.white70),
@@ -96,7 +102,12 @@ class _LoginPageState extends State<LoginPage> {
               ),
 
               TextField(
+                onChanged: (texto) {
+                  senha = texto;
+                },
+
                 obscureText: true,
+
                 style: TextStyle(color: Colors.white70),
                 decoration: InputDecoration(
                   hintText: 'Digite sua senha',
@@ -135,12 +146,8 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       );
                     }
-
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
                   },
+
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.green,
@@ -164,16 +171,17 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 3),
 
               TextButton(
-                onPressed: () {},
-                child: Text(
-                  'Cadastre-se',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ),
+                onPressed: () {
+              Navigator.push(
+                context,
+              MaterialPageRoute(
+                builder: (context) => CadastroPage(),
+              ),);
+                },
+
+              child: const Text(
+              'Cadastre-se',
+              ),),
             ],
           ),
         ),
