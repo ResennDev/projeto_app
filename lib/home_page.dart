@@ -1,8 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_app/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String nome = '';
+  String registro = '';
+
+  @override
+  void initState() {
+    super.initState();
+    carregarNome();
+  }
+
+  Future<void> carregarNome() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      nome = prefs.getString('nome') ?? '';
+      registro = prefs.getString('registro') ?? '';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,35 +60,41 @@ class HomePage extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.green,
                   borderRadius: BorderRadius.circular(20),
-                
-                boxShadow: [
-                  BoxShadow(
-                color: Colors.black12,
-                blurRadius: 8,
-                offset: Offset(0, 3),
-                  ),
-                ],
-                ),
-              child: Column(
-                children: [
-                  Icon(
-                    Icons.person,
-                    size: 60,
-                    color: Colors.white,
-                  ),
-                
-                SizedBox(height: 10),
 
-                  Text(
-                    'Bem-vindo!',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 8,
+                      offset: Offset(0, 3),
                     ),
-                  ),
-                ]
-              ),),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Icon(Icons.person, size: 60, color: Colors.white),
+
+                    SizedBox(height: 10),
+
+                    Text(
+                      'Bem-vindo $nome!',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+
+                    Text(
+                      'RA: $registro',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
 
             SizedBox(height: 20),
@@ -78,13 +108,13 @@ class HomePage extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
 
-                boxShadow: [
-                  BoxShadow(
-                color: Colors.black12,
-                blurRadius: 8,
-                offset: Offset(0, 3),
-                  ),
-                ],
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 8,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -99,7 +129,7 @@ class HomePage extends StatelessWidget {
 
                 SizedBox(width: 15),
 
-              Expanded(
+                Expanded(
                   child: Container(
                     height: 120,
                     decoration: BoxDecoration(
@@ -107,12 +137,12 @@ class HomePage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
 
                       boxShadow: [
-                  BoxShadow(
-                color: Colors.black12,
-                blurRadius: 8,
-                offset: Offset(0, 3),
-                  ),
-                ],
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 8,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -124,10 +154,9 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-
               ],
             ),
-          ]
+          ],
         ),
       ),
     );

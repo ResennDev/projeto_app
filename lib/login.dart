@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_app/home_page.dart';
 import 'package:projeto_app/cadastro_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 String email = '';
 String senha = '';
@@ -71,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                 },
 
                 style: TextStyle(color: Colors.white70),
-                
+
                 decoration: InputDecoration(
                   hintText: 'Digite seu email',
                   hintStyle: TextStyle(color: Colors.white70),
@@ -131,8 +132,13 @@ class _LoginPageState extends State<LoginPage> {
                 width: double.infinity,
 
                 child: ElevatedButton(
-                  onPressed: () {
-                    if (email == "admin" && senha == "123") {
+                  onPressed: () async {
+                    final prefs = await SharedPreferences.getInstance();
+
+                    String? emailSalvo = prefs.getString('email');
+                    String? senhaSalva = prefs.getString('senha');
+
+                    if (email == emailSalvo && senha == senhaSalva) {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -172,16 +178,14 @@ class _LoginPageState extends State<LoginPage> {
 
               TextButton(
                 onPressed: () {
-              Navigator.push(
-                context,
-              MaterialPageRoute(
-                builder: (context) => CadastroPage(),
-              ),);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CadastroPage()),
+                  );
                 },
 
-              child: const Text(
-              'Cadastre-se',
-              ),),
+                child: const Text('Cadastre-se'),
+              ),
             ],
           ),
         ),
