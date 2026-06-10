@@ -147,14 +147,44 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.person, size: 40, color: Colors.green),
+                        Icon(Icons.date_range, size: 40, color: Colors.green),
                         SizedBox(height: 10),
-                        Text('Perfil'),
+                        Text('Calendario'),
                       ],
                     ),
                   ),
                 ),
               ],
+            ),
+
+            const SizedBox(height:20),
+
+            const Align(
+              alignment: Alignment.centerLeft, 
+              child: Text(
+                'Tarefas de Hoje',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold
+              ),
+            ),
+          ),
+            const SizedBox(height:20),
+
+            Container(
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Column(
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.check_box_outline_blank),
+                    title: Text('Nenhuma tarefa para hoje'),
+                  ),
+                ]
+              ),
             ),
           ],
         ),

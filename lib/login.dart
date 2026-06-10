@@ -184,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                   );
                 },
 
-                child: const Text('Cadastre-se'),
+                child: const Text('Cadastre-se', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
               ),
             ],
           ),
