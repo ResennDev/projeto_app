@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_app/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'calendario_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -63,7 +64,7 @@ class _HomePageState extends State<HomePage> {
 
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black12,
+                      color: Colors.black38,
                       blurRadius: 8,
                       offset: Offset(0, 3),
                     ),
@@ -110,7 +111,7 @@ class _HomePageState extends State<HomePage> {
 
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black12,
+                          color: Colors.black38,
                           blurRadius: 8,
                           offset: Offset(0, 3),
                         ),
@@ -138,38 +139,47 @@ class _HomePageState extends State<HomePage> {
 
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black12,
+                          color: Colors.black38,
                           blurRadius: 8,
                           offset: Offset(0, 3),
                         ),
                       ],
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.date_range, size: 40, color: Colors.green),
-                        SizedBox(height: 10),
-                        Text('Calendario'),
-                      ],
+
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CalendarioPage(),
+                          ),
+                        );
+                      },
+
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.date_range, size: 40, color: Colors.green),
+                          SizedBox(height: 10),
+                          Text('Calendário'),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
 
-            const SizedBox(height:20),
+            const SizedBox(height: 20),
 
             const Align(
-              alignment: Alignment.centerLeft, 
+              alignment: Alignment.centerLeft,
               child: Text(
                 'Tarefas de Hoje',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
             ),
-          ),
-            const SizedBox(height:20),
+            const SizedBox(height: 20),
 
             Container(
               padding: const EdgeInsets.all(15),
@@ -180,10 +190,12 @@ class _HomePageState extends State<HomePage> {
               child: const Column(
                 children: [
                   ListTile(
-                    leading: Icon(Icons.check_box_outline_blank),
+                    leading: Icon(Icons.check_circle_outline_sharp),
+                    iconColor: Colors.green,
+                    // leading: Icon(Icons.check_box_outline_blank),
                     title: Text('Nenhuma tarefa para hoje'),
                   ),
-                ]
+                ],
               ),
             ),
           ],
