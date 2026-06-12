@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projeto_app/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'calendario_page.dart';
+import 'tarefa_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

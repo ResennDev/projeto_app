@@ -37,7 +37,7 @@ class _CalendarioPageState extends State<CalendarioPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => TarefaPage(Data: selectadeDay),
+                builder: (context) => TarefaPage(data: selectadeDay),
               ),
             );
             /* setState(() {
