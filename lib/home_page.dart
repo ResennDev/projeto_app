@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projeto_app/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'calendario_page.dart';
-import 'tarefa_page.dart';
+import 'dart:convert';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,11 +14,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String nome = '';
   String registro = '';
+  List<Map<String, dynamic>> tarefasHoje = [];
 
   @override
   void initState() {
     super.initState();
     carregarNome();
+    carregarTarefasHoje();
   }
 
   Future<void> carregarNome() async {
@@ -29,6 +31,30 @@ class _HomePageState extends State<HomePage> {
       registro = prefs.getString('registro') ?? '';
     });
   }
+
+  Future<void> carregarTarefasHoje() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final hoje = DateTime.now();
+
+    final chave =
+    '${hoje.day}/${hoje.month}/${hoje.year}';
+
+    final tarefasJson = prefs.getString(chave);
+
+  if (tarefasJson != null) {
+    setState(() {
+      tarefasHoje = List<Map<String, dynamic>>.from(
+        jsonDecode(tarefasJson),
+      );
+    });
+  } else {
+    setState(() {
+      tarefasHoje = [];
+    });
+  }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -148,13 +174,14 @@ class _HomePageState extends State<HomePage> {
                     ),
 
                     child: InkWell(
-                      onTap: () {
-                        Navigator.push(
+                      onTap: () async {
+                        await Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => CalendarioPage(),
                           ),
                         );
+                        carregarTarefasHoje();
                       },
 
                       child: Column(
@@ -188,19 +215,39 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: const Column(
-                children: [
-                  ListTile(
-                    leading: Icon(Icons.check_circle_outline_sharp),
-                    iconColor: Colors.green,
-                    // leading: Icon(Icons.check_box_outline_blank),
-                    title: Text('Nenhuma tarefa para hoje'),
+              child: tarefasHoje.isEmpty
+              ? const ListTile(
+                leading: Icon(
+                  Icons.check_circle_outline_sharp,
+                  color: Colors.green,
+                ),
+                title:Text('Nenhuma tarefa para hoje'),
+              )
+            : Column(
+              children: tarefasHoje.map((tarefa) {
+                return ListTile(
+                  leading: Icon(
+                    (tarefa['concluída'] ?? false)
+                    ? Icons.check_circle
+                    : Icons.radio_button_unchecked,
+                    color: (tarefa['concluída'] ?? false)
+                    ? Colors.green
+                    : Colors.grey,
                   ),
-                ],
-              ),
+
+                  title: Text(
+                    tarefa['titulo'],
+                    style: TextStyle(
+                      decoration: (tarefa['concluída'] ?? false)
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none,
+                    ),
+                  ),
+                );
+              }).toList(),
             ),
-          ],
-        ),
+          ),
+        ]),
       ),
     );
   }

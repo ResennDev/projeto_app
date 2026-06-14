@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class TarefaPage extends StatefulWidget {
   final DateTime data;
@@ -11,9 +12,42 @@ class TarefaPage extends StatefulWidget {
 }
 
 class _TarefaPageState extends State<TarefaPage> {
-  List<String> tarefas = [];
+  List<Map<String, dynamic>> tarefas = [];
 
   final TextEditingController tarefaController = TextEditingController();
+
+  String get chaveData =>
+    '${widget.data.day}/${widget.data.month}/${widget.data.year}';
+
+  @override
+  void initState() {
+    super.initState();
+    carregarTarefas();
+  }
+
+  Future<void> carregarTarefas() async {
+    final prefs = await SharedPreferences.getInstance();
+
+  final tarefasJson = prefs.getString(chaveData);
+  print(tarefasJson);
+
+  if (tarefasJson != null) {
+    setState(() {
+      tarefas = List<Map<String, dynamic>>.from(
+        jsonDecode(tarefasJson),
+      );
+    });
+  }
+  }
+
+  Future<void> salvarTarefas() async {
+  final prefs = await SharedPreferences.getInstance();
+
+  await prefs.setString(
+    chaveData,
+    jsonEncode(tarefas),
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +82,13 @@ class _TarefaPageState extends State<TarefaPage> {
                   onPressed: () {
                     if (tarefaController.text.isNotEmpty) {
                       setState(() {
-                        tarefas.add(tarefaController.text);
+                        tarefas.add({
+                          'titulo': tarefaController.text,
+                          'concluída': false,
                       });
+                      });
+
+                      salvarTarefas();
 
                       tarefaController.clear();
                     }
@@ -67,13 +106,32 @@ class _TarefaPageState extends State<TarefaPage> {
                 itemBuilder: (context, index) {
                   return Card(
                     child: ListTile(
-                      title: Text(tarefas[index]),
+                      leading: Checkbox(
+                        value: tarefas[index]['concluída'] ?? false,
+                        onChanged: (valor) {
+                          setState(() {
+                            tarefas[index]['concluída'] = valor ?? false;
+                          });
+                          
+                          salvarTarefas();
+                        }
+                      ),
+                      title: Text(
+                        tarefas[index]['titulo'],
+                        style: TextStyle(
+                          decoration: (tarefas[index]['concluída'] ?? false)
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
+                        ),
+                      ),
                       trailing: IconButton(
                         icon: const Icon(Icons.delete),
                         onPressed: () {
                           setState(() {
                             tarefas.removeAt(index);
                           });
+
+                          salvarTarefas();
                         },
                       ),
                     ),
