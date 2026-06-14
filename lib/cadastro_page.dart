@@ -17,18 +17,59 @@ class _CadastroPageState extends State<CadastroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Cadastro')),
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
+        title: const Text('Cadastro')),
 
-      body: Padding(
-        padding: const EdgeInsets.all(20),
+      body: Column(
+        children: [
+          SizedBox(height: 15),
 
-        child: Column(
-          children: [
+          Container(
+/*             height: 180,
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              color: Colors.green,
+              borderRadius: BorderRadius.all(
+                Radius.circular(20),
+                ),
+              ), */
+              child: const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                      Icons.person_add,
+                      size: 80,
+                      color: Colors.green,
+                      ),
+
+            SizedBox(height: 10),
+
+            Text(
+              'Novo Cadastro',
+              style: TextStyle(
+              color: Colors.green,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              ),
+          ),
+        ],
+      ),
+    ),
+  ),
+
+          Expanded(child: Padding(
+            padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
             TextField(
               onChanged: (value) {
                 nome = value;
               },
-              decoration: const InputDecoration(labelText: 'Nome'),
+              decoration: const InputDecoration(labelText: 'Nome',
+              ),
             ),
 
             const SizedBox(height: 15),
@@ -48,7 +89,8 @@ class _CadastroPageState extends State<CadastroPage> {
               onChanged: (value) {
                 email = value;
               },
-              decoration: const InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(labelText: 'Email',
+              ),
             ),
 
             const SizedBox(height: 15),
@@ -58,21 +100,29 @@ class _CadastroPageState extends State<CadastroPage> {
               onChanged: (value) {
                 senha = value;
               },
-              decoration: const InputDecoration(labelText: 'Senha'),
+              decoration: const InputDecoration(labelText: 'Senha',
+              ),
             ),
 
             const SizedBox(height: 30),
 
             ElevatedButton(
               onPressed: () async {
-                if (nome.isEmpty || email.isEmpty || senha.isEmpty) {
+                if (nome.isEmpty || 
+                email.isEmpty || 
+                senha.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Preencha todos os campos')),
+                    const SnackBar(
+                      content: Text(
+                        'Preencha todos os campos',
+                        ),
+                      ),
                   );
                   return;
                 }
 
-                final prefs = await SharedPreferences.getInstance();
+                final prefs = 
+                await SharedPreferences.getInstance();
 
                 await prefs.setString('nome', nome);
                 await prefs.setString('registro', registro);
@@ -81,17 +131,35 @@ class _CadastroPageState extends State<CadastroPage> {
 
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('Cadastro realizado com sucesso!'),
+                    content: Text(
+                      'Cadastro realizado com sucesso!',
+                    ),
                   ),
                 );
 
                 Navigator.pop(context);
               },
-              child: const Text('Cadastrar'),
-            ),
-          ],
+
+              style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.green,
+                    elevation: 8,
+                    padding: EdgeInsets.symmetric(
+                      vertical: 20,
+                      horizontal: 35,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                  ),
+                  child: const Text(
+                    'Cadastrar',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),),],
+          ),
         ),
       ),
-    );
+    ],
+  ),);
   }
 }

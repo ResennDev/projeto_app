@@ -138,6 +138,17 @@ class _LoginPageState extends State<LoginPage> {
                     String? emailSalvo = prefs.getString('email');
                     String? senhaSalva = prefs.getString('senha');
 
+                    if (email.isEmpty || senha.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                        content: Text(
+                        'Preencha Email e Senha'
+                      ),
+                    ),
+                  );
+                      return;
+                }
+
                     if (email == emailSalvo && senha == senhaSalva) {
                       Navigator.pushReplacement(
                         context,

@@ -60,6 +60,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
         title: const Text('Dashboard'),
         actions: [
           IconButton(
@@ -226,13 +228,43 @@ class _HomePageState extends State<HomePage> {
             : Column(
               children: tarefasHoje.map((tarefa) {
                 return ListTile(
-                  leading: Icon(
-                    (tarefa['concluída'] ?? false)
-                    ? Icons.check_circle
-                    : Icons.radio_button_unchecked,
-                    color: (tarefa['concluída'] ?? false)
-                    ? Colors.green
-                    : Colors.grey,
+                  leading: Checkbox(
+                    value: tarefa['concluída'] ?? false,
+                    onChanged: (valor) async {
+                      setState(() {
+                        tarefa['concluída'] = valor ?? false;
+
+                        tarefasHoje.sort((a, b) {
+
+                          final concluidaA = a['concluída'] ?? false;
+                          final concluidaB = b['concluída'] ?? false;
+
+                          if (concluidaA != concluidaB) {
+                            return concluidaA ? 1 : -1;
+                          }
+
+                          return a['titulo']
+                          .toString()
+                          .toLowerCase()
+                          .compareTo(
+                            b['titulo']
+                            .toString()
+                            .toLowerCase(),
+                          );
+                        });
+                      });
+
+                      final prefs = await SharedPreferences.getInstance();
+
+                      final hoje = DateTime.now();
+                      final chave = 
+                      '${hoje.day}/${hoje.month}/${hoje.year}';
+
+                      await prefs.setString(
+                        chave,
+                        jsonEncode(tarefasHoje),
+                      );
+                    },
                   ),
 
                   title: Text(

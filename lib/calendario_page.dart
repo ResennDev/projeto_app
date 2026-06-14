@@ -16,7 +16,10 @@ class _CalendarioPageState extends State<CalendarioPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Calendario')),
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
+        title: const Text('Calendario')),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: TableCalendar(

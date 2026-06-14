@@ -52,7 +52,10 @@ class _TarefaPageState extends State<TarefaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Tarefas')),
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
+        title: const Text('Tarefas')),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -81,9 +84,12 @@ class _TarefaPageState extends State<TarefaPage> {
                 ElevatedButton(
                   onPressed: () {
                     if (tarefaController.text.isNotEmpty) {
+
+                      final texto = tarefaController.text.trim();
+
                       setState(() {
                         tarefas.add({
-                          'titulo': tarefaController.text,
+                          'titulo': texto[0].toUpperCase() + texto.substring(1),
                           'concluída': false,
                       });
                       });
