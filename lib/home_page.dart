@@ -26,19 +26,28 @@ class _HomePageState extends State<HomePage> {
   Future<void> carregarNome() async {
     final prefs = await SharedPreferences.getInstance();
 
+    final emailLogado =
+    prefs.getString('usuario_logado') ?? '';
+
     setState(() {
-      nome = prefs.getString('nome') ?? '';
-      registro = prefs.getString('registro') ?? '';
+      nome = 
+        prefs.getString('${emailLogado}_nome') ?? '';
+      
+      registro = 
+        prefs.getString('${emailLogado}_registro') ?? '';
     });
   }
 
   Future<void> carregarTarefasHoje() async {
     final prefs = await SharedPreferences.getInstance();
 
+    final emailLogado = 
+      prefs.getString('usuario_logado') ?? ' ';
+
     final hoje = DateTime.now();
 
     final chave =
-    '${hoje.day}/${hoje.month}/${hoje.year}';
+    '${emailLogado}_${hoje.day}_${hoje.month}_${hoje.year}';
 
     final tarefasJson = prefs.getString(chave);
 

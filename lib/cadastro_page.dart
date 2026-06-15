@@ -124,10 +124,10 @@ class _CadastroPageState extends State<CadastroPage> {
                 final prefs = 
                 await SharedPreferences.getInstance();
 
-                await prefs.setString('nome', nome);
-                await prefs.setString('registro', registro);
-                await prefs.setString('email', email);
-                await prefs.setString('senha', senha);
+                await prefs.setString('${email}_nome', nome);
+                await prefs.setString('${email}_registro', registro);
+                await prefs.setString('${email}_email', email);
+                await prefs.setString('${email}_senha', senha);
 
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(

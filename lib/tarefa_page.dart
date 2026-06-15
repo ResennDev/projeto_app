@@ -14,10 +14,12 @@ class TarefaPage extends StatefulWidget {
 class _TarefaPageState extends State<TarefaPage> {
   List<Map<String, dynamic>> tarefas = [];
 
+  String emailLogado = ' ';
+
   final TextEditingController tarefaController = TextEditingController();
 
   String get chaveData =>
-    '${widget.data.day}/${widget.data.month}/${widget.data.year}';
+    '${emailLogado}_${widget.data.day}_${widget.data.month}_${widget.data.year}';
 
   @override
   void initState() {
@@ -28,8 +30,12 @@ class _TarefaPageState extends State<TarefaPage> {
   Future<void> carregarTarefas() async {
     final prefs = await SharedPreferences.getInstance();
 
-  final tarefasJson = prefs.getString(chaveData);
-  print(tarefasJson);
+    emailLogado = 
+      prefs.getString('usuario_logado') ?? ' ';
+
+  final tarefasJson = 
+    prefs.getString(chaveData);
+
 
   if (tarefasJson != null) {
     setState(() {

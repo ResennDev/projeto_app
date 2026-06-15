@@ -136,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                     final prefs = await SharedPreferences.getInstance();
 
                     String? emailSalvo = prefs.getString('email');
-                    String? senhaSalva = prefs.getString('senha');
+                    String? senhaSalva = prefs.getString('${email}_senha');
 
                     if (email.isEmpty || senha.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -149,7 +149,12 @@ class _LoginPageState extends State<LoginPage> {
                       return;
                 }
 
-                    if (email == emailSalvo && senha == senhaSalva) {
+                    if (senha == senhaSalva) {
+                      await prefs.setString(
+                        'usuario_logado',
+                        email,
+                      );
+                      
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
