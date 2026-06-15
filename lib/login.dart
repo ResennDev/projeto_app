@@ -135,7 +135,6 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () async {
                     final prefs = await SharedPreferences.getInstance();
 
-                    String? emailSalvo = prefs.getString('email');
                     String? senhaSalva = prefs.getString('${email}_senha');
 
                     if (email.isEmpty || senha.isEmpty) {
