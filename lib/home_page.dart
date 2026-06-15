@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_app/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:projeto_app/configuracoes_page.dart';
 import 'calendario_page.dart';
 import 'dart:convert';
 
@@ -26,44 +27,36 @@ class _HomePageState extends State<HomePage> {
   Future<void> carregarNome() async {
     final prefs = await SharedPreferences.getInstance();
 
-    final emailLogado =
-    prefs.getString('usuario_logado') ?? '';
+    final emailLogado = prefs.getString('usuario_logado') ?? '';
 
     setState(() {
-      nome = 
-        prefs.getString('${emailLogado}_nome') ?? '';
-      
-      registro = 
-        prefs.getString('${emailLogado}_registro') ?? '';
+      nome = prefs.getString('${emailLogado}_nome') ?? '';
+
+      registro = prefs.getString('${emailLogado}_registro') ?? '';
     });
   }
 
   Future<void> carregarTarefasHoje() async {
     final prefs = await SharedPreferences.getInstance();
 
-    final emailLogado = 
-      prefs.getString('usuario_logado') ?? ' ';
+    final emailLogado = prefs.getString('usuario_logado') ?? ' ';
 
     final hoje = DateTime.now();
 
-    final chave =
-    '${emailLogado}_${hoje.day}_${hoje.month}_${hoje.year}';
+    final chave = '${emailLogado}_${hoje.day}_${hoje.month}_${hoje.year}';
 
     final tarefasJson = prefs.getString(chave);
 
-  if (tarefasJson != null) {
-    setState(() {
-      tarefasHoje = List<Map<String, dynamic>>.from(
-        jsonDecode(tarefasJson),
-      );
-    });
-  } else {
-    setState(() {
-      tarefasHoje = [];
-    });
+    if (tarefasJson != null) {
+      setState(() {
+        tarefasHoje = List<Map<String, dynamic>>.from(jsonDecode(tarefasJson));
+      });
+    } else {
+      setState(() {
+        tarefasHoje = [];
+      });
+    }
   }
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -89,50 +82,44 @@ class _HomePageState extends State<HomePage> {
         padding: EdgeInsets.all(20),
         child: Column(
           children: [
-            InkWell(
-              onTap: () {
-                // Ação ao pressionar
-              },
-              child: Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.circular(20),
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black38,
+                    blurRadius: 8,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Icon(Icons.person, size: 60, color: Colors.white),
 
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black38,
-                      blurRadius: 8,
-                      offset: Offset(0, 3),
+                  SizedBox(height: 10),
+
+                  Text(
+                    'Bem-vindo $nome!',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Icon(Icons.person, size: 60, color: Colors.white),
+                  ),
 
-                    SizedBox(height: 10),
-
-                    Text(
-                      'Bem-vindo $nome!',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                  Text(
+                    'RA: $registro',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
-
-                    Text(
-                      'RA: $registro',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
 
@@ -141,27 +128,36 @@ class _HomePageState extends State<HomePage> {
             Row(
               children: [
                 Expanded(
-                  child: Container(
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black38,
-                          blurRadius: 8,
-                          offset: Offset(0, 3),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ConfiguracoesPage(),
                         ),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.settings, size: 40, color: Colors.green),
-                        SizedBox(height: 10),
-                        Text('Configurações'),
-                      ],
+                      );
+                    },
+                    child: Container(
+                      height: 120,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black38,
+                            blurRadius: 8,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.settings, size: 40, color: Colors.green),
+                          SizedBox(height: 10),
+                          Text('Configurações'),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -174,7 +170,6 @@ class _HomePageState extends State<HomePage> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
-
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black38,
@@ -183,7 +178,6 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-
                     child: InkWell(
                       onTap: () async {
                         await Navigator.push(
@@ -192,9 +186,9 @@ class _HomePageState extends State<HomePage> {
                             builder: (context) => CalendarioPage(),
                           ),
                         );
+
                         carregarTarefasHoje();
                       },
-
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -227,68 +221,67 @@ class _HomePageState extends State<HomePage> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: tarefasHoje.isEmpty
-              ? const ListTile(
-                leading: Icon(
-                  Icons.check_circle_outline_sharp,
-                  color: Colors.green,
-                ),
-                title:Text('Nenhuma tarefa para hoje'),
-              )
-            : Column(
-              children: tarefasHoje.map((tarefa) {
-                return ListTile(
-                  leading: Checkbox(
-                    value: tarefa['concluída'] ?? false,
-                    onChanged: (valor) async {
-                      setState(() {
-                        tarefa['concluída'] = valor ?? false;
+                  ? const ListTile(
+                      leading: Icon(
+                        Icons.check_circle_outline_sharp,
+                        color: Colors.green,
+                      ),
+                      title: Text('Nenhuma tarefa para hoje'),
+                    )
+                  : Column(
+                      children: tarefasHoje.map((tarefa) {
+                        return ListTile(
+                          leading: Checkbox(
+                            value: tarefa['concluída'] ?? false,
+                            onChanged: (valor) async {
+                              setState(() {
+                                tarefa['concluída'] = valor ?? false;
 
-                        tarefasHoje.sort((a, b) {
+                                tarefasHoje.sort((a, b) {
+                                  final concluidaA = a['concluída'] ?? false;
+                                  final concluidaB = b['concluída'] ?? false;
 
-                          final concluidaA = a['concluída'] ?? false;
-                          final concluidaB = b['concluída'] ?? false;
+                                  if (concluidaA != concluidaB) {
+                                    return concluidaA ? 1 : -1;
+                                  }
 
-                          if (concluidaA != concluidaB) {
-                            return concluidaA ? 1 : -1;
-                          }
+                                  return a['titulo']
+                                      .toString()
+                                      .toLowerCase()
+                                      .compareTo(
+                                        b['titulo'].toString().toLowerCase(),
+                                      );
+                                });
+                              });
 
-                          return a['titulo']
-                          .toString()
-                          .toLowerCase()
-                          .compareTo(
-                            b['titulo']
-                            .toString()
-                            .toLowerCase(),
-                          );
-                        });
-                      });
+                              final prefs =
+                                  await SharedPreferences.getInstance();
 
-                      final prefs = await SharedPreferences.getInstance();
+                              final hoje = DateTime.now();
+                              final chave =
+                                  '${hoje.day}/${hoje.month}/${hoje.year}';
 
-                      final hoje = DateTime.now();
-                      final chave = 
-                      '${hoje.day}/${hoje.month}/${hoje.year}';
+                              await prefs.setString(
+                                chave,
+                                jsonEncode(tarefasHoje),
+                              );
+                            },
+                          ),
 
-                      await prefs.setString(
-                        chave,
-                        jsonEncode(tarefasHoje),
-                      );
-                    },
-                  ),
-
-                  title: Text(
-                    tarefa['titulo'],
-                    style: TextStyle(
-                      decoration: (tarefa['concluída'] ?? false)
-                      ? TextDecoration.lineThrough
-                      : TextDecoration.none,
+                          title: Text(
+                            tarefa['titulo'],
+                            style: TextStyle(
+                              decoration: (tarefa['concluída'] ?? false)
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none,
+                            ),
+                          ),
+                        );
+                      }).toList(),
                     ),
-                  ),
-                );
-              }).toList(),
             ),
-          ),
-        ]),
+          ],
+        ),
       ),
     );
   }
