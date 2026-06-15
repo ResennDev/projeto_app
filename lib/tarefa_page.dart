@@ -19,7 +19,7 @@ class _TarefaPageState extends State<TarefaPage> {
   final TextEditingController tarefaController = TextEditingController();
 
   String get chaveData =>
-    '${emailLogado}_${widget.data.day}_${widget.data.month}_${widget.data.year}';
+      '${emailLogado}_${widget.data.day}_${widget.data.month}_${widget.data.year}';
 
   @override
   void initState() {
@@ -30,30 +30,22 @@ class _TarefaPageState extends State<TarefaPage> {
   Future<void> carregarTarefas() async {
     final prefs = await SharedPreferences.getInstance();
 
-    emailLogado = 
-      prefs.getString('usuario_logado') ?? ' ';
+    emailLogado = prefs.getString('usuario_logado') ?? ' ';
 
-  final tarefasJson = 
-    prefs.getString(chaveData);
+    final tarefasJson = prefs.getString(chaveData);
 
-
-  if (tarefasJson != null) {
-    setState(() {
-      tarefas = List<Map<String, dynamic>>.from(
-        jsonDecode(tarefasJson),
-      );
-    });
-  }
+    if (tarefasJson != null) {
+      setState(() {
+        tarefas = List<Map<String, dynamic>>.from(jsonDecode(tarefasJson));
+      });
+    }
   }
 
   Future<void> salvarTarefas() async {
-  final prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
 
-  await prefs.setString(
-    chaveData,
-    jsonEncode(tarefas),
-  );
-}
+    await prefs.setString(chaveData, jsonEncode(tarefas));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +53,8 @@ class _TarefaPageState extends State<TarefaPage> {
       appBar: AppBar(
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
-        title: const Text('Tarefas')),
+        title: const Text('Tarefas'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -90,14 +83,13 @@ class _TarefaPageState extends State<TarefaPage> {
                 ElevatedButton(
                   onPressed: () {
                     if (tarefaController.text.isNotEmpty) {
-
                       final texto = tarefaController.text.trim();
 
                       setState(() {
                         tarefas.add({
                           'titulo': texto[0].toUpperCase() + texto.substring(1),
                           'concluída': false,
-                      });
+                        });
                       });
 
                       salvarTarefas();
@@ -124,16 +116,16 @@ class _TarefaPageState extends State<TarefaPage> {
                           setState(() {
                             tarefas[index]['concluída'] = valor ?? false;
                           });
-                          
+
                           salvarTarefas();
-                        }
+                        },
                       ),
                       title: Text(
                         tarefas[index]['titulo'],
                         style: TextStyle(
                           decoration: (tarefas[index]['concluída'] ?? false)
-                          ? TextDecoration.lineThrough
-                          : TextDecoration.none,
+                              ? TextDecoration.lineThrough
+                              : TextDecoration.none,
                         ),
                       ),
                       trailing: IconButton(
