@@ -110,7 +110,7 @@ Projeto de estudo desenvolvido por Guilherme Henrique com foco no aprendizado de
 
 Projeto desenvolvido por Guilherme Henrique
 
-Estudante de desenvolvimento de software, focado em aprendizado contínuo, desenvolvimento mobile e construção de portfólio.
+Estudante de Análise e desenvolvimento de sistemas, focado em aprendizado contínuo, desenvolvimento mobile e construção de portfólio.
 
 ---
 
@@ -173,4 +173,4 @@ Study project developed by Guilherme Henrique, focusing on learning Flutter and 
 
 Project developed by Guilherme Henrique
 
-Software development student focused on continuous learning, mobile development and portfolio building.
+Systems analysis and development student focused on continuous learning, mobile development and portfolio building.
